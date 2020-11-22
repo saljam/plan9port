@@ -1,0 +1,15 @@
+#!/bin/bash
+fshell=$(finger $(whoami) | sed -n 's/.*Shell: //p' | sed 1q)
+SHELL=${fshell:-$SHELL}
+export PLAN9=${PLAN9:-/usr/local/plan9}
+cd $HOME
+
+if ! [[ :$PATH: =~ :$PLAN9/bin: ]]
+then
+	PATH=$PATH:$PLAN9/bin
+fi
+
+font=${font:-$PLAN9/font/lucsans/euro.8.font}
+Font=${font:-$PLAN9/font/lucm/unicode.9.font}
+acme -f $font -F $Font &
+exit 0
